@@ -10,6 +10,9 @@ class UserAccount {
     const num = Number(prompt('what is your account number'))
     if (num === this.accountNumber) {
       this.playGame()
+    } else {
+      alert('WRONG, TRY AGAIN')
+      this.enterAccNum()
     }
   }
   guessNumber() {
