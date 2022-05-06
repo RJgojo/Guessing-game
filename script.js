@@ -2,14 +2,15 @@
 class UserAccount {
   userPoint = 0
   keepGoing = ''
-  constructor(name, accountNumber, password) {
+  constructor(name, accountNumber) {
     this.name = name
     this.accountNumber = accountNumber
-    this.password = password
   }
   enterAccNum() {
     const num = Number(prompt('what is your account number'))
-    return num === this.accountNumber
+    if (num === this.accountNumber) {
+      this.playGame()
+    }
   }
   guessNumber() {
     return new Promise((resolve, reject) => {
@@ -28,7 +29,7 @@ class UserAccount {
         this.cont()
         if (this.keepGoing === 'yes') {
           this.playGame()
-        } else resolve('bye')
+        } else reject('bye')
       }
     })
   }
@@ -37,21 +38,15 @@ class UserAccount {
   }
 
   async playGame() {
-    const accNum = await this.enterAccNum()
-    if (accNum) {
-      const firstAttempt = await this.guessNumber()
-      //   console.log(firstAttempt)
-      console.log(`you have ${this.userPoint} points`)
-      this.cont()
-      if (this.keepGoing) {
-        this.keepGoing === 'yes' ? this.playGame() : console.log('Bye')
-      }
-    } else {
-      console.log('Wrong!!!')
-      this.enterAccNum()
+    const firstAttempt = await this.guessNumber()
+    //   console.log(firstAttempt)
+    console.log(`you have ${this.userPoint} points`)
+    this.cont()
+    if (this.keepGoing) {
+      this.keepGoing === 'yes' ? this.playGame() : console.log('Bye')
     }
   }
 }
 
-const raph = new UserAccount('raph', 8788, 'siaiub')
-raph.playGame()
+const raph = new UserAccount('raph', 8788)
+raph.enterAccNum()
